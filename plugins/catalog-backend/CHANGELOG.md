@@ -1,5 +1,35 @@
 # @backstage/plugin-catalog-backend
 
+## 1.3.0-next.3
+
+### Minor Changes
+
+- 1dd6c22cc8: Added an option to be able to trigger refreshes on entities based on a prestored arbitrary key.
+
+  The UrlReaderProcessor, FileReaderProcessor got updated to store the absolute URL of the catalog file as a refresh key. In the format of `<type>:<target>`
+  The PlaceholderProcessor got updated to store the resolverValues as refreshKeys for the entities.
+
+  The custom resolvers will need to be updated to pass in a `CatalogProcessorEmit` function as parameter and they should be updated to emit their refresh processingResults. You can see the updated resolvers in the `PlaceholderProcessor.ts`
+
+  ```ts
+    // yamlPlaceholderResolver
+    ...
+    const { content, url } = await readTextLocation(params);
+
+    params.emit(processingResult.refresh(`url:${url}`));
+    ...
+  ```
+
+### Patch Changes
+
+- a70869e775: Updated dependency `msw` to `^0.43.0`.
+- Updated dependencies
+  - @backstage/backend-common@0.14.1-next.3
+  - @backstage/catalog-client@1.0.4-next.2
+  - @backstage/integration@1.2.2-next.3
+  - @backstage/plugin-permission-common@0.6.3-next.1
+  - @backstage/plugin-permission-node@0.6.3-next.2
+
 ## 1.2.1-next.2
 
 ### Patch Changes
